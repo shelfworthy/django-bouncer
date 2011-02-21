@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
  
 setup(
-    name='django-invites',
+    name='django-bouncer',
     version='0.1',
     description='Allows you (or users of your site) to invite new people to join',
     author='Chris Drackett',
     author_email='chris@shelfworthy.com',
-    url='http://github.com/shelfworthy/django-invites',
+    url='http://github.com/shelfworthy/django-bouncer',
     packages = [
         "invites",
     ],
