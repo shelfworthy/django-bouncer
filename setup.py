@@ -8,7 +8,7 @@ setup(
     author_email='chris@shelfworthy.com',
     url='http://github.com/shelfworthy/django-bouncer',
     packages = [
-        "invites",
+        "bouncer",
     ],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
