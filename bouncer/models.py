@@ -104,7 +104,7 @@ def user_post_save(sender, instance, created, **kwargs):
     if created:
         # check if the new user has been invited in the past
         try:
-            invite = Invite.objects.get(email=instance.email)
+            invite = Invite.objects.get(to_email=instance.email)
             invite.accept(instance)
         except Invite.DoesNotExist:
             pass
