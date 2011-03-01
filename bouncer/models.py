@@ -8,14 +8,14 @@ from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 from django.utils.hashcompat import sha_constructor
 
-from invites import signals as invites_signals
+from bouncer import signals as invites_signals
 
 class WaitList(models.Model):
     # email of user who wants in the site
     email = models.EmailField()
     
     # date the user was added to the list
-    date_added = models.DateField(auto_now_add=True)
+    date_added = models.DateTimeField(auto_now_add=True)
     
     # date the user was added to the site
     date_invited = models.DateField(null=True, blank=True)
