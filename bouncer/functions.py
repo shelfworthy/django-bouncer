@@ -4,16 +4,9 @@ from django.shortcuts import get_object_or_404
 from .models import Invite, WaitList
 
 def add_to_waitlist(email):
-    waitlister, created = WaitList.objects.get_or_create(
+    return WaitList.objects.get_or_create(
         email = email
     )
-    
-    if created:
-        # user has been added to the waitlist
-        return True
-    else:
-        # user is already on the list
-        return False
 
 def add_invite(to_email, from_user=None):
     invite, created = Invite.objects.get_or_create(

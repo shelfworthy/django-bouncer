@@ -25,7 +25,27 @@ class WaitList(models.Model):
     
     # who let the user into the site
     added_by = models.ForeignKey(User, related_name="users_added", blank=True, null=True)
-
+    
+    class Meta:
+        verbose_name = "waitlister"
+        verbose_name_plural = "wait list"
+    
+    def __unicode__(self):
+        return u"%s" % self.email
+    
+    @property
+    def is_user(self):
+        return self.joined_as != None
+    
+    def save(self, *a, **kw):
+        try:
+            existing_user = User.objects.get(email=self.email)
+            self.joined_as = existing_user
+            self.date_invited = existing_user.date_joined
+        except User.DoesNotExist:
+            pass
+        
+        super(WaitList, self).save(*a, **kw)
 
 class InvitesUser(models.Model):
     inviter = models.ForeignKey(User, unique=True)
