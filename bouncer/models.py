@@ -96,7 +96,7 @@ class Invite(models.Model):
             self.accepted_by = user
             self.save()
             
-            invites_signals.user_accepts_invite(sender=self, new_user=user, invited_by_user_list=self.from_users.all())
+            invites_signals.user_accepts_invite.send(sender=self, new_user=user, invited_by_user_list=self.from_users.all())
     
     def ignore(self):
         self.ignored = True
@@ -115,7 +115,7 @@ class Invite(models.Model):
                     return
                 
                 # fire the send invite signal
-                invites_signals.send_invite(sender=self, to_email=self.to_email, from_user_list=self.from_users.all())
+                invites_signals.send_invite.send(sender=self, to_email=self.to_email, from_user_list=self.from_users.all())
                 
                 self.date_sent = date.today()
                 self.save()
