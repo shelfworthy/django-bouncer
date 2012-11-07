@@ -3,16 +3,25 @@ from django.http import HttpResponseRedirect
 
 class MembersOnlyMiddleware(object):
     def __init__(self):
-        self.open_views = getattr(settings, 'OPEN_TO_PUBLIC_VIEWS', [])
         self.redirect_url = getattr(settings, 'MEMBERS_ONLY_REDIRECT', '/')
 
-    def process_view(self, request, view_func, view_args, view_kwargs):
+        self.exact_urls = getattr(settings, 'BOUNCER_EXACT_URLS', [])
+        self.exact_urls.append(self.redirect_url)
+
+        self.partial_urls = getattr(settings, 'BOUNCER_PARTIAL_URLS', [])
+
+    def process_request(self, request):
+        # Let Authenticated users see everything
         if request.user.is_authenticated():
             return
 
-        full_view_name = '%s.%s' % (view_func.__module__, view_func.__name__)
-
-        if full_view_name in self.open_views:
+        # If a URL completely matches an exact url, let the user in.
+        if request.path in self.exact_urls:
             return
-        else:
-            return HttpResponseRedirect(self.redirect_url)
+
+        # If a partial is part of the URL, let the user in.
+        for partial in self.partial_urls:
+            if partial in request.path:
+                return
+
+        return HttpResponseRedirect(self.redirect_url)

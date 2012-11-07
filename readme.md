@@ -37,24 +37,42 @@ To use the middleware, add it to `MIDDLEWARE_CLASSSES` in your settings file:
 
 the middleware uses the following settings from your settings file:
 
-### OPEN_TO_PUBLIC_VIEWS
 
-A list of views that anyone can view.
+
+
+
+        self.exact_urls = getattr(settings, 'BOUNCER_EXACT_URLS', ['/'])
+        self.partial_urls = getattr(settings, 'BOUNCER_PARTIAL_URLS', [])
+
+
+### BOUNCER_EXACT_URLS
+
+A list of urls that anyone can view. The url needs to exactly match the urls defined in this list.
 Examples might include your homepage, your login page, etc.
 
 ```python
 
-OPEN_TO_PUBLIC_VIEWS = [
-    'app_name.views.home',
-    'app_name.apps.members.views.login'
+BOUNCER_EXACT_URLS = [
+    '/'
+    '/login/'
 ]
 
 ```
 
+### BOUNCER_PARTIAL_URLS
+
+A list of strings that urls should be checked against. This is useful for letting a section of your site be viewed even if it contains more than one url. Any URL containing a string in this list will be show to all visitors.
+
+```python
+BOUNCER_EXACT_URLS = [
+    '/public/'
+]
+```
+
 ### MEMBERS_ONLY_REDIRECT
 
-Where to redirect people who try and visit a view not on the above list.
-Make sure this redirect view *is* on the above list :)
+Where to redirect people who try and visit a url not on the above list. This url will automattically be added to the `BOUNCER_EXACT_URLS` list.
+
 defaults to `/`
 
 How To Use
