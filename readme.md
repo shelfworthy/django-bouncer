@@ -38,6 +38,15 @@ the middleware uses the following settings from your settings file:
 A list of views that anyone can view.
 Examples might include your homepage, your login page, etc.
 
+''' python
+
+OPEN_TO_PUBLIC_VIEWS = [
+    'app_name.views.home',
+    'app_name.apps.members.views.login'
+]
+
+'''
+
 ### MEMBERS_ONLY_REDIRECT
 
 Where to redirect people who try and visit a view not on the above list.

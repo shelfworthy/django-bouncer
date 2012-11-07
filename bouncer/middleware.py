@@ -12,8 +12,6 @@ class MembersOnlyMiddleware(object):
 
         full_view_name = '%s.%s' % (view_func.__module__, view_func.__name__)
 
-        print full_view_name
-
         if full_view_name in self.open_views:
             return
         else:
