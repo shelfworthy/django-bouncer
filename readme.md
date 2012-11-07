@@ -28,10 +28,10 @@ To use the middleware, add it to MIDDLEWARE_CLASSSES in your settings file:
 
     MIDDLEWARE_CLASSES = (
         #...
-        'bouncer.middleware.MembersOnly',
+        'bouncer.middleware.MembersOnlyMiddleware',
     )
 
-the middleware uses the following settings from your settings file (if they exist):
+the middleware uses the following settings from your settings file:
 
 ### OPEN_TO_PUBLIC_VIEWS
 
