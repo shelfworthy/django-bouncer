@@ -12,24 +12,28 @@ The application takes steps to limit the amount of invite emails a potential mem
 Installation
 ------------
 
-To use the invite form, you first need to add bouncer to INSTALLED_APPS in your settings file:
+To use the invite form, you first need to add bouncer to `INSTALLED_APPS` in your settings file:
 
+```python
     INSTALLED_APPS = (
     #...
     'bouncer',
     )
+```
 
 Members Only middleware
 -----------------------
 
-If you would also like to prevent non-authenticated users from viewing your site, you can make use of bouncer.middleware.MembersOnly. This middleware redirects all views to a specified location if a user is not logged in.
+If you would also like to prevent non-authenticated users from viewing your site, you can make use of `bouncer.middleware.MembersOnlyMiddleware`. This middleware redirects all views to a specified location if a user is not logged in.
 
-To use the middleware, add it to MIDDLEWARE_CLASSSES in your settings file:
+To use the middleware, add it to `MIDDLEWARE_CLASSSES` in your settings file:
 
+```python
     MIDDLEWARE_CLASSES = (
         #...
         'bouncer.middleware.MembersOnlyMiddleware',
     )
+```
 
 the middleware uses the following settings from your settings file:
 
@@ -38,20 +42,20 @@ the middleware uses the following settings from your settings file:
 A list of views that anyone can view.
 Examples might include your homepage, your login page, etc.
 
-''' python
+```python
 
 OPEN_TO_PUBLIC_VIEWS = [
     'app_name.views.home',
     'app_name.apps.members.views.login'
 ]
 
-'''
+```
 
 ### MEMBERS_ONLY_REDIRECT
 
 Where to redirect people who try and visit a view not on the above list.
 Make sure this redirect view *is* on the above list :)
-defaults to '/'
+defaults to `/`
 
 How To Use
 ==========
@@ -61,15 +65,19 @@ Wait List
 
 This app includes a wait list functionality to keep track of people who want access to your site.
 
-You can add users to this list using the add_to_waitlist function from bounce.functions.
+You can add users to this list using the `add_to_waitlist` function from `bouncer.functions`.
 
+```python
 	list_item, created = add_to_waitlist('some@email.address')
+```
 
 This function will return the WaitList object and if it was created or already existed. From the WaitList object you can also check if a user is already a member of the site:
 
+```python
 	if list_item.is_user:
 		# email is already connected to a user object
 	else:
 		# email is not connected to a user object
+```
 
 This is done by checking existing users of your site. You can use this to notify users trying to join the wait-list that they are already members.
